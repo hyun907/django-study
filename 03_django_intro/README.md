@@ -8,3 +8,4 @@
 
 ## 노트
 - [Django 프레임워크 개요](django_intro.md)
+- [Django 작동 방식](how_django_works.md)
