@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# 가상환경
+venv/
+.venv/
+
+# Django
+db.sqlite3
+media/
+
+# 환경변수 (SECRET_KEY 등)
+.env
+
+# 강의 자료 (저작권 - 업로드 금지)
+course_materials/
+*.zip
+
+# OS / 에디터
+.DS_Store
+.vscode/
+.idea/
