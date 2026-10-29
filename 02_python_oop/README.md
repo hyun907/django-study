@@ -12,3 +12,4 @@
 - [ ] 43. pip로 패키지 설치하기
 
 ## 노트
+- [`__init__`과 `self`](self_and_init.md)
