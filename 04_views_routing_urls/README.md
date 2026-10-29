@@ -13,3 +13,4 @@
 - [ ] 57. 템플릿에 뷰 연결하기
 
 ## 노트
+- [Function 기반 뷰](function_based_views.md)
