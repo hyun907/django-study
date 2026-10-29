@@ -14,3 +14,4 @@
 
 ## 노트
 - [Function 기반 뷰](function_based_views.md)
+- [동적 뷰 - 라우팅 로직](dynamic_views.md)
