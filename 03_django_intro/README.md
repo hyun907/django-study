@@ -7,3 +7,4 @@
 - [ ] 47. 첫 번째 Django 애플리케이션
 
 ## 노트
+- [Django 프레임워크 개요](django_intro.md)
