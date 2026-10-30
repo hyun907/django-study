@@ -18,3 +18,4 @@
 - [ResponseNotFound와 404 페이지](not_found_404.md)
 - [리디렉션 기초](redirect_basics.md)
 - [reverse URL과 URL name](reverse_url_name.md)
+- [템플릿에 뷰 연결하기](connect_templates.md)
