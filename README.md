@@ -7,7 +7,7 @@ Udemy **【한글자막】 Django 4 및 Python 풀스택 개발자 마스터 클
 - [x] [02. Python OOP](02_python_oop/)
 - [x] [03. Django 프레임워크 소개](03_django_intro/)
 - [x] [04. 뷰, 라우팅, URL](04_views_routing_urls/)
-- [ ] [05. Django 템플릿](05_django_templates/)
+- [x] [05. Django 템플릿](05_django_templates/)
 
 ## 커밋 규칙
 `타입: 내용` 예: `feat: sorted()와 list.sort() 차이 예제 추가`
