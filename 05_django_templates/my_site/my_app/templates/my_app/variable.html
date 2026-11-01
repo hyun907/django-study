@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>variable html</h1>
+    <h2>Her first name was {{ first_name }}</h2>
+    <h3>and her last was {{ last_name | length }}</h3>
+    <h2>{{some_dict.inside_key}}</h2>
+    <h2>{# this is a comment#}</h2>
+    <ul>
+      {% for k, v in some_dict.items %}
+      <li>{{ k }} : {{ v }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if user_logged_in %}
+    <h1>Welcome back you are logged in</h1>
+    {% endif %}
+  </body>
+</html>
