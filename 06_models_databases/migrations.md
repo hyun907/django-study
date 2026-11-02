@@ -1,6 +1,6 @@
 # 마이그레이션
 
-핵심: **`makemigrations`로 모델의 변경 사항을 파일로 기록하고, `migrate`로 그 파일을 DB에 적용한다.**
+요약: **`makemigrations`로 모델의 변경 사항을 파일로 기록하고, `migrate`로 그 파일을 DB에 적용한다.**
 
 ## 1. 앱 등록
 
