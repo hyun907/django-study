@@ -1,4 +1,4 @@
-# 데이터 인터렉션: 생성과 조회
+# 데이터 인터렉션: 생성, 조회, 수정, 삭제
 
 ## 0. shell 실행
 
@@ -184,15 +184,46 @@ office/migrations/0002_patient_heartrate_alter_patient_age.py
 
 validators는 `save()`나 `create()`를 할 때 **자동으로 검사되지 않는다.** `Patient.objects.create(..., age=200)`도 그대로 저장된다. 검사는 `full_clean()`을 호출하거나 폼(ModelForm, admin)을 통해 입력할 때 일어난다.
 
+## 6. 엔트리 업데이트
+
+**꺼내서 → 값 바꾸고 → `save()`**
+
+```python
+>>> carl = Patient.objects.get(pk=1)   # pk는 primary key, 여기서는 id와 같다
+>>> carl.last_n
+'smith'
+>>> carl.last_n = 'django'
+>>> carl
+<Patient: django, carl, is 30 years old>
+>>> carl.save()
+```
+
+값을 바꾼 직후에도 `carl`은 바뀐 값으로 보이지만, 이건 **파이썬 객체만 바뀐 상태**다. `save()`를 해야 DB에 반영된다. 생성할 때와 같은 원리다.
+
+## 7. 엔트리 삭제
+
+**꺼내서 → `delete()`**
+
+```python
+>>> data_point = Patient.objects.get(pk=1)
+>>> data_point.delete()
+(1, {'office.Patient': 1})    # (지운 개수, {모델: 지운 개수})
+>>> Patient.objects.all()
+<QuerySet [<Patient: smith, susan, is 40 years old>, <Patient: baek, seunghyun, is 25 years old>, <Patient: smith, adam, is 40 years old>, <Patient: marx, karl, is 20 years old>]>
+```
+
+`delete()`는 `save()` 없이 **바로 DB에서 지워진다.**
+
 ## 지금 DB에 들어 있는 데이터
 
-| id | first_n | last_n | age |
-|---|---|---|---|
-| 1 | carl | smith | 30 |
-| 2 | susan | smith | 40 |
-| 3 | seunghyun | baek | 25 |
-| 4 | adam | smith | 40 |
-| 5 | karl | marx | 20 |
+id 1(carl)은 수정 후 삭제됐다. `heartrate`는 5번 모델 업데이트 때 기본값 60으로 채워졌다.
+
+| id | first_n | last_n | age | heartrate |
+|---|---|---|---|---|
+| 2 | susan | smith | 40 | 60 |
+| 3 | seunghyun | baek | 25 | 60 |
+| 4 | adam | smith | 40 | 60 |
+| 5 | karl | marx | 20 | 60 |
 
 ## 정리
 
@@ -207,3 +238,5 @@ validators는 `save()`나 `create()`를 할 때 **자동으로 검사되지 않�
 | 비교·포함 조건 | `filter(age__gte=39)`, `filter(last_n__startswith='s')` |
 | 정렬 | `order_by('age')`, 내림차순은 `order_by('-age')` |
 | 필드 추가 | 기존 데이터가 있으면 `default=` 또는 `null=True` 필요 |
+| 수정 | `get()`으로 꺼내서 값 바꾸고 `save()` |
+| 삭제 | `get()`으로 꺼내서 `delete()` (바로 반영) |
