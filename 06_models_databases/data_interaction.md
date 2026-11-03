@@ -142,6 +142,48 @@ QuerySet이 아니라 **객체 하나**를 돌려준다. 결과가 정확히 1�
 >>> Patient.objects.order_by('-age')   # 앞에 -를 붙이면 내림차순
 ```
 
+## 5. 모델 업데이트: 필드 추가와 validators
+
+`Patient`에 `heartrate` 필드를 추가하고, `age`에 값 범위를 걸었다.
+
+```python
+# office/models.py
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+class Patient(models.Model):
+    first_n = models.CharField(max_length=30)
+    last_n = models.CharField(max_length=30)
+    age = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(120)])
+    heartrate = models.IntegerField(default=60, validators=[MinValueValidator(1), MaxValueValidator(300)])
+```
+
+**데이터가 이미 있는 테이블에 필드를 추가하면**
+
+처음에 `default` 없이 `heartrate`를 추가하고 `makemigrations`를 하면 이렇게 물어본다.
+
+```
+It is impossible to add a non-nullable field 'heartrate' to patient without specifying a default.
+This is because the database needs something to populate existing rows.
+ 1) Provide a one-off default now
+ 2) Quit and manually define a default value in models.py.
+```
+
+이미 있는 환자 5명의 `heartrate` 칸을 뭘로 채울지 모르기 때문이다. 2번을 골라 빠져나온 뒤 `models.py`에 `default=60`을 넣으면 된다. 그러면 기존 데이터의 `heartrate`가 전부 60으로 채워진다. 값이 비어 있어도 된다면 `null=True`를 쓰는 방법도 있다.
+
+**`makemigrations` 결과**
+
+```
+office/migrations/0002_patient_heartrate_alter_patient_age.py
+    + Add field heartrate to patient
+    ~ Alter field age on patient
+```
+
+`age`는 validators만 붙였는데도 `Alter field`가 생긴다. Django는 validators 변경까지 마이그레이션에 기록하기 때문이다. (실제 DB 테이블 구조는 바뀌지 않는다) 마지막으로 `python manage.py migrate`를 해야 DB에 반영된다. ([마이그레이션](migrations.md))
+
+**validators 주의점**
+
+validators는 `save()`나 `create()`를 할 때 **자동으로 검사되지 않는다.** `Patient.objects.create(..., age=200)`도 그대로 저장된다. 검사는 `full_clean()`을 호출하거나 폼(ModelForm, admin)을 통해 입력할 때 일어난다.
+
 ## 지금 DB에 들어 있는 데이터
 
 | id | first_n | last_n | age |
@@ -164,3 +206,4 @@ QuerySet이 아니라 **객체 하나**를 돌려준다. 결과가 정확히 1�
 | 딱 하나 조회 | `Patient.objects.get(...)` → 객체 (0개·2개 이상이면 에러) |
 | 비교·포함 조건 | `filter(age__gte=39)`, `filter(last_n__startswith='s')` |
 | 정렬 | `order_by('age')`, 내림차순은 `order_by('-age')` |
+| 필드 추가 | 기존 데이터가 있으면 `default=` 또는 `null=True` 필요 |
