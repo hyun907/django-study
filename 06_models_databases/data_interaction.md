@@ -109,6 +109,39 @@ QuerySet이 아니라 **객체 하나**를 돌려준다. 결과가 정확히 1�
 
 그래서 `get()`은 `id`/`pk`처럼 겹치지 않는 값으로 찾을 때 쓴다.
 
+## 4. 필드 조회 (Field lookups)
+
+`필드명__조건=값` 형태로 "같다" 말고 다른 조건을 건다. **밑줄은 두 개(`__`)**다.
+
+```python
+>>> Patient.objects.filter(last_n__startswith='s')   # 's'로 시작
+<QuerySet [<Patient: smith, carl, is 30 years old>, <Patient: smith, susan, is 40 years old>, <Patient: smith, adam, is 40 years old>]>
+
+>>> Patient.objects.filter(age__in=[20, 30, 40])     # 리스트 안에 있는 값
+<QuerySet [<Patient: smith, carl, is 30 years old>, <Patient: smith, susan, is 40 years old>, <Patient: smith, adam, is 40 years old>, <Patient: marx, karl, is 20 years old>]>
+
+>>> Patient.objects.filter(age__gte=39)              # 39 이상
+<QuerySet [<Patient: smith, susan, is 40 years old>, <Patient: smith, adam, is 40 years old>]>
+```
+
+자주 쓰는 조건:
+
+| lookup | 뜻 |
+|---|---|
+| `__gt` / `__gte` | 초과 / 이상 |
+| `__lt` / `__lte` | 미만 / 이하 |
+| `__in` | 리스트 안에 있음 |
+| `__startswith` / `__endswith` | ~로 시작 / ~로 끝남 |
+| `__contains` | ~를 포함 |
+
+**`order_by()`: 정렬**
+
+```python
+>>> Patient.objects.order_by('age')    # 오름차순 (어린 순)
+<QuerySet [<Patient: marx, karl, is 20 years old>, <Patient: baek, seunghyun, is 25 years old>, <Patient: smith, carl, is 30 years old>, <Patient: smith, susan, is 40 years old>, <Patient: smith, adam, is 40 years old>]>
+>>> Patient.objects.order_by('-age')   # 앞에 -를 붙이면 내림차순
+```
+
 ## 지금 DB에 들어 있는 데이터
 
 | id | first_n | last_n | age |
@@ -129,3 +162,5 @@ QuerySet이 아니라 **객체 하나**를 돌려준다. 결과가 정확히 1�
 | 조건 조회 | `Patient.objects.filter(...)` → QuerySet (없으면 빈 QuerySet) |
 | OR / NOT 조건 | `filter(Q(...) \| Q(...))`, `filter(~Q(...))` |
 | 딱 하나 조회 | `Patient.objects.get(...)` → 객체 (0개·2개 이상이면 에러) |
+| 비교·포함 조건 | `filter(age__gte=39)`, `filter(last_n__startswith='s')` |
+| 정렬 | `order_by('age')`, 내림차순은 `order_by('-age')` |
