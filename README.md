@@ -10,6 +10,7 @@ Udemy **【한글자막】 Django 4 및 Python 풀스택 개발자 마스터 클
 - [x] [05. Django 템플릿](05_django_templates/)
 - [x] [06. 모델과 데이터베이스](06_models_databases/)
 - [ ] [07. Django Admin](07_django_admin/)
+- [ ] [08. Django Form](08_django_forms/)
 
 ## 커밋 규칙
 `타입: 내용` 예: `feat: sorted()와 list.sort() 차이 예제 추가`
