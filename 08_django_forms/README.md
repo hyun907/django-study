@@ -11,3 +11,4 @@
 
 ## 노트
 - [Django 폼 클래스 기초](django_form_class.md)
+- [CSS 연결(static)과 폼 위젯](static_css_and_widgets.md)
