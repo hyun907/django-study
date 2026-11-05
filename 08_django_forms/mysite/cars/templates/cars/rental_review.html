@@ -11,7 +11,13 @@
     <h1>RENTAL REVIEW FORM</h1>
     <form method="POST" class="myform">
         {% csrf_token %}
-        {{ form }}
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
         <input type="submit">
     </form>
 </body>

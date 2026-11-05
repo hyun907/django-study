@@ -8,6 +8,7 @@ def rental_review(request):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
+            form.save()
             print(form.cleaned_data)
             return redirect(reverse('cars:thank_you'))
 
