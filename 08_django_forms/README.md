@@ -6,8 +6,8 @@
 - [x] 89. Django 폼 클래스 기초
 - [x] 90. Django 폼 - 템플릿 렌더링
 - [x] 91. Django 폼 - 위젯과 스타일링
-- [ ] 92. Django – ModelForms
-- [ ] 93. Django - ModelForms 커스터마이징
+- [x] 92. Django – ModelForms
+- [x] 93. Django - ModelForms 커스터마이징
 
 ## 노트
 - [Django 폼 클래스 기초](django_form_class.md)
